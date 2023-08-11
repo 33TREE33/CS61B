@@ -1,6 +1,6 @@
 public class NBody {
 
-    public static int starNumber = 0;
+    private static int starNumber = 0;
     public static double readRadius(String filePath){
         In dataFile = new In(filePath);
         starNumber = dataFile.readInt();
