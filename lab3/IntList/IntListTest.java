@@ -74,7 +74,7 @@ public class IntListTest {
         IntList A = IntList.of(1,2,3,4,5);
         IntList exp = IntList.of(5,4,3,2,1);
         assertEquals(exp,IntList.reverse(A));
-        assertEquals(IntList.of(1,2,3,4,5),A);
+        assertNotEquals(IntList.of(1,2,3,4,5),A);
         assertNull(IntList.reverse(null));
     }
 

@@ -128,13 +128,17 @@ public class IntList {
     }
 
     public static IntList reverse(IntList A) {
-        IntList res = null;
-        IntList ptr  = A ;
-        while (ptr!=null) {
-            res = new IntList(ptr.first, res);
-            ptr = ptr.rest;
+        IntList prev = null;
+        IntList current = A;
+        IntList next;
+        while (current != null) {
+            next = current.rest;
+            current.rest = prev;
+            prev = current;
+            current = next;
         }
-        return res;
+        A = prev;
+        return A;
     }
 
 
