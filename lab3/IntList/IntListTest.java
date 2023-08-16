@@ -75,6 +75,11 @@ public class IntListTest {
         IntList exp = IntList.of(5,4,3,2,1);
         assertEquals(exp,IntList.reverse(A));
         assertEquals(IntList.of(1,2,3,4,5),A);
+        assertNull(IntList.reverse(null));
+    }
+
+    public static void main(String... args) {
+        jh61b.junit.TestRunner.runTests("all", IntListTest.class);
     }
 
 }
