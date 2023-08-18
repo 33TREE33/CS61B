@@ -1,6 +1,6 @@
-public class LinkedListDeque<Type> {
+public class LinkedListDeque<T> {
     private class ListNode {
-        public Type item;
+        private T item;
         ListNode prev;
         ListNode next;
 
@@ -9,7 +9,7 @@ public class LinkedListDeque<Type> {
             next = null;
         }
 
-        public ListNode(ListNode p,Type i,ListNode n) {
+        public ListNode(ListNode p, T i, ListNode n) {
             prev = p;
             item = i;
             next = n;
@@ -20,24 +20,24 @@ public class LinkedListDeque<Type> {
     private ListNode sentinel;
 
     public LinkedListDeque() {
-        size = 0 ;
+        size = 0;
         sentinel = new ListNode();
-        sentinel.prev=sentinel;
-        sentinel.next=sentinel;
+        sentinel.prev = sentinel;
+        sentinel.next = sentinel;
     }
 
-    public void addFirst(Type item) {
+    public void addFirst(T item) {
         size++;
-        sentinel.next = new ListNode(sentinel,item,sentinel.next);
+        sentinel.next = new ListNode(sentinel, item, sentinel.next);
     }
 
-    public void addLast(Type item) {
+    public void addLast(T item) {
         size++;
-        sentinel.prev = new ListNode(sentinel.prev,item,sentinel);
+        sentinel.prev = new ListNode(sentinel.prev, item, sentinel);
     }
 
     public boolean isEmpty() {
-        return size==0;
+        return size == 0;
     }
 
     public int size() {
@@ -46,58 +46,54 @@ public class LinkedListDeque<Type> {
 
     public void printDeque() {
         ListNode ptr = sentinel;
-        for(int i = 0 ; i <size ; ++i) {
+        for (int i = 0; i < size; ++i) {
             ptr = ptr.next;
             System.out.print(ptr.item);
         }
     }
 
-    public Type removeFirst() {
-        if(size==0) {
+    public T removeFirst() {
+        if (size == 0) {
             return null;
         }
         size--;
         ListNode ptr = sentinel.next;
         sentinel.next = sentinel.next.next;
-        ptr.prev=null;
-        ptr.next=null;
         return ptr.item;
     }
 
-    public Type removeLast() {
-        if(size==0) {
+    public T removeLast() {
+        if (size == 0) {
             return null;
         }
         size--;
         ListNode ptr = sentinel.prev;
-        sentinel.prev=sentinel.prev.prev;
-        ptr.prev=null;
-        ptr.next=null;
+        sentinel.prev = sentinel.prev.prev;
         return ptr.item;
     }
 
-    public Type get(int index) {
-        if(isEmpty()||index<0||index>size-1) {
+    public T get(int index) {
+        if (isEmpty() || index < 0 || index > size - 1) {
             return null;
         }
         ListNode ptr = sentinel;
-        for (int i = 0 ; i < index ; ++i) {
+        for (int i = 0; i < index; ++i) {
             ptr = ptr.next;
         }
         return ptr.item;
     }
 
-    public Type getRecursive(int index) {
-        if(isEmpty()||index<0||index>size-1) {
+    public T getRecursive(int index) {
+        if (isEmpty() || index < 0 || index > size - 1) {
             return null;
         }
-        return getRecursiveHelp(sentinel,index);
+        return getRecursiveHelp(sentinel, index);
     }
 
-    public Type getRecursiveHelp(ListNode start,int index) {
-        if(index==0) {
+    public T getRecursiveHelp(ListNode start, int index) {
+        if (index == 0) {
             return start.item;
         }
-        return getRecursiveHelp(start.next,index-1);
+        return getRecursiveHelp(start.next, index - 1);
     }
 }
