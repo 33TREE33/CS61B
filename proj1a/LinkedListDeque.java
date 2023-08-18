@@ -29,13 +29,15 @@ public class LinkedListDeque<T> {
     public void addFirst(T item) {
         size++;
         ListNode temp = new ListNode(sentinel, item, sentinel.next);
+        sentinel.next.prev = temp;
         sentinel.next = temp;
     }
 
     public void addLast(T item) {
         size++;
         ListNode temp = new ListNode(sentinel.prev, item, sentinel);
-        sentinel.prev = temp;
+        sentinel.prev.next = temp;
+        sentinel.next = temp;
     }
 
     public boolean isEmpty() {
