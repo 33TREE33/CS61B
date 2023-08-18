@@ -3,10 +3,10 @@ public class ArrayDeque<T> {
     private int size;
     private int head;
     private int tail;
-    final int length = 8;
-    final int scale = 4;
+    private final int Initiallength = 8;
+    private final int scale = 4;
     public ArrayDeque() {
-        items = (T[]) new Object[length];
+        items = (T[]) new Object[Initiallength];
         size = 0;
         head = items.length / 2 - 1;
         tail = items.length / 2;
@@ -75,7 +75,7 @@ public class ArrayDeque<T> {
             return null;
         }
         size--;
-        if (items.length > length && size > items.length / 2 && size < items.length / scale) {
+        if (items.length > Initiallength && size > items.length / 2 && size < items.length / scale) {
             this.resize(items.length / 2);
         }
         head = moveRight(head);
@@ -88,7 +88,7 @@ public class ArrayDeque<T> {
             return null;
         }
         size--;
-        if (items.length > length && size > items.length / 2 && size < items.length / scale) {
+        if (items.length > Initiallength && size > items.length / 2 && size < items.length / scale) {
             this.resize(items.length / 2);
         }
         tail = moveLeft(tail);
