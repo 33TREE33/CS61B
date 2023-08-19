@@ -107,12 +107,5 @@ public class LinkedListDeque<T> {
         return getRecursiveHelp(start.next, index - 1);
     }
 
-    public static void main(String[] args){
-        LinkedListDeque<Integer> a = new LinkedListDeque<>();
-        a.addLast(1);
-        a.addLast(2);
-        a.addLast(3);
-        Integer b = a.removeLast();
-    }
 }
 
