@@ -62,9 +62,11 @@ public class LinkedListDeque<T> {
         }
         size--;
         ListNode ptr = sentinel.next;
+        T res = ptr.item;
         sentinel.next = sentinel.next.next;
         sentinel.next.prev = sentinel;
-        return ptr.item;
+        ptr = null;
+        return res;
     }
 
     public T removeLast() {
@@ -73,9 +75,11 @@ public class LinkedListDeque<T> {
         }
         size--;
         ListNode ptr = sentinel.prev;
+        T res = ptr.item;
         sentinel.prev = sentinel.prev.prev;
         sentinel.prev.next = sentinel;
-        return ptr.item;
+        ptr = null;
+        return res;
     }
 
     public T get(int index) {
@@ -103,3 +107,4 @@ public class LinkedListDeque<T> {
         return getRecursiveHelp(start.next, index - 1);
     }
 }
+
