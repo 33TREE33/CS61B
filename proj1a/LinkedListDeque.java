@@ -86,7 +86,7 @@ public class LinkedListDeque<T> {
         if (isEmpty() || index < 0 || index > size - 1) {
             return null;
         }
-        ListNode ptr = sentinel;
+        ListNode ptr = sentinel.next;
         for (int i = 0; i < index; ++i) {
             ptr = ptr.next;
         }
@@ -97,7 +97,7 @@ public class LinkedListDeque<T> {
         if (isEmpty() || index < 0 || index > size - 1) {
             return null;
         }
-        return getRecursiveHelp(sentinel, index);
+        return getRecursiveHelp(sentinel.next, index);
     }
 
     private T getRecursiveHelp(ListNode start, int index) {

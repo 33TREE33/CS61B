@@ -105,7 +105,7 @@ public class ArrayDeque<T> {
             return null;
         }
         int i = head + 1;
-        for ( ; i < head + index; i++) {
+        for ( ; i < head + index + 1; i++) {
             i = moveRight(i);
         }
         return items[i];
