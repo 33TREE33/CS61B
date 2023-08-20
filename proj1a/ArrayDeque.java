@@ -31,11 +31,11 @@ public class ArrayDeque<T> {
     private void resize(int capacity) {
         T[] a = (T[]) new Object[capacity];
         for (int i = capacity / scale, j = head; i < capacity / scale + size; i++) {
-            a[i] = items[j];
             j = moveRight(j);
+            a[i] = items[j];
         }
         head = capacity / scale - 1;
-        tail = capacity / scale + size;
+        tail = capacity / scale + size - 1;
         items = a;
     }
 
@@ -81,8 +81,7 @@ public class ArrayDeque<T> {
             this.resize(items.length / 2);
         }
         head = moveRight(head);
-        T res = items[head];
-        return res;
+        return items[head];
     }
 
     public T removeLast() {
@@ -96,15 +95,14 @@ public class ArrayDeque<T> {
             this.resize(items.length / 2);
         }
         tail = moveLeft(tail);
-        T res = items[tail];
-        return res;
+        return items[tail];
     }
 
     public T get(int index) {
         if (isEmpty() || index < 0 || index > size - 1) {
             return null;
         }
-        int i = head + 1;
+        int i = moveRight(head);
         for ( ; i < head + index; i++) {
             i = moveRight(i);
         }
