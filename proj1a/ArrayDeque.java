@@ -76,7 +76,6 @@ public class ArrayDeque<T> {
         }
         size--;
         if (items.length > initialLength
-                && size > items.length / 2
                 && size < items.length / scale) {
             this.resize(items.length / 2);
         }
@@ -90,7 +89,6 @@ public class ArrayDeque<T> {
         }
         size--;
         if (items.length > initialLength
-                && size > items.length / 2
                 && size < items.length / scale) {
             this.resize(items.length / 2);
         }
@@ -103,7 +101,7 @@ public class ArrayDeque<T> {
             return null;
         }
         int i = moveRight(head);
-        for ( ; i < head + index; i++) {
+        for (int j = 0; j < index; j++) {
             i = moveRight(i);
         }
         return items[i];
