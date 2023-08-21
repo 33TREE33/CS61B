@@ -4,6 +4,7 @@ public class ArrayDeque<T> {
     private int head;
     private int tail;
     private final int initialLength = 8;
+    // at list use 25%
     private final int scale = 4;
     public ArrayDeque() {
         items = (T[]) new Object[initialLength];
@@ -30,12 +31,12 @@ public class ArrayDeque<T> {
 
     private void resize(int capacity) {
         T[] a = (T[]) new Object[capacity];
-        for (int i = capacity / scale, j = head; i < capacity / scale + size; i++) {
+        for (int i = items.length / 2 - size / 2, j = head; i < items.length / 2 + size / 2 - 1; i++) {
             j = moveRight(j);
             a[i] = items[j];
         }
-        head = capacity / scale - 1;
-        tail = capacity / scale + size - 1;
+        head = items.length / 2 - size / 2 - 1;
+        tail = items.length / 2 + size / 2;
         items = a;
     }
 
@@ -76,7 +77,7 @@ public class ArrayDeque<T> {
         }
         size--;
         if (items.length > initialLength
-                && size < items.length / scale) {
+                && size <= items.length / scale) {
             this.resize(items.length / 2);
         }
         head = moveRight(head);
@@ -89,7 +90,7 @@ public class ArrayDeque<T> {
         }
         size--;
         if (items.length > initialLength
-                && size < items.length / scale) {
+                && size <= items.length / scale) {
             this.resize(items.length / 2);
         }
         tail = moveLeft(tail);
