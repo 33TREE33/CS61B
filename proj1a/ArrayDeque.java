@@ -1,22 +1,24 @@
 public class ArrayDeque<T> {
-    private T[] items;
-    private int size;
-    private int head;
-    private int tail;
-    private final int initialLength = 8;
-    // at list use 25%
+    public T[] items;
+    public int head;
+    public int tail;
+    public int size;
+    //at least use 25% of the array
     private final int scale = 4;
+    //initial length should be set to 8
+    private final int initialLength = 8;
+
     public ArrayDeque() {
         items = (T[]) new Object[initialLength];
+        head = initialLength / 2 - 1;
+        tail = initialLength / 2;
         size = 0;
-        head = items.length / 2 - 1;
-        tail = items.length / 2;
     }
 
     private int moveRight(int index) {
         index++;
-        if (index >= items.length) {
-            return 0;
+        if (index == items.length) {
+            index = 0;
         }
         return index;
     }
@@ -24,20 +26,29 @@ public class ArrayDeque<T> {
     private int moveLeft(int index) {
         index--;
         if (index < 0) {
-            return items.length - 1;
+            index = items.length - 1;
         }
         return index;
     }
 
-    private void resize(int capacity) {
-        T[] a = (T[]) new Object[capacity];
-        for (int i = items.length / 2 - size / 2, j = head; i < items.length / 2 + size / 2 - 1; i++) {
-            j = moveRight(j);
-            a[i] = items[j];
+    private void resize(int newLength) {
+        int index = head;
+        int begin = newLength / 2 - size / 2;
+        T[] newArr = (T[]) new Object[newLength];
+        for (int i = 0; i < size; i++) {
+            index = moveRight(index);
+            newArr[begin] = items[index];
+            begin++;
         }
-        head = items.length / 2 - size / 2 - 1;
-        tail = items.length / 2 + size / 2;
-        items = a;
+        items = newArr;
+    }
+
+    public int size() {
+        return size;
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
     }
 
     public void addFirst(T item) {
@@ -58,21 +69,8 @@ public class ArrayDeque<T> {
         tail = moveRight(tail);
     }
 
-    public boolean isEmpty() {
-        return size == 0;
-    }
-
-    public int size() {
-        return size;
-    }
-    public void printDeque() {
-        for (int i = 0, j = head; i < size; i++) {
-            System.out.print(items[head]);
-            j = moveRight(j);
-        }
-    }
     public T removeFirst() {
-        if (size == 0) {
+        if(isEmpty()) {
             return null;
         }
         size--;
@@ -85,7 +83,7 @@ public class ArrayDeque<T> {
     }
 
     public T removeLast() {
-        if (size == 0) {
+        if(isEmpty()) {
             return null;
         }
         size--;
@@ -97,14 +95,22 @@ public class ArrayDeque<T> {
         return items[tail];
     }
 
+    public void printDeque() {
+        int index = head;
+        for (int i = 0; i < size; i++) {
+            index = moveRight(index);
+            System.out.print(items[index]);
+        }
+    }
+
     public T get(int index) {
         if (isEmpty() || index < 0 || index > size - 1) {
             return null;
         }
-        int i = moveRight(head);
-        for (int j = 0; j < index; j++) {
-            i = moveRight(i);
+        int begin = moveRight(head);
+        for(int i = 0; i < index; i++) {
+            begin = moveRight(head);
         }
-        return items[i];
+        return items[begin];
     }
 }
