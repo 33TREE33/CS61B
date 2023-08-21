@@ -1,8 +1,8 @@
 public class ArrayDeque<T> {
-    public T[] items;
-    public int head;
-    public int tail;
-    public int size;
+    private T[] items;
+    private int head;
+    private int tail;
+    private int size;
     //at least use 25% of the array
     private final int scale = 4;
     //initial length should be set to 8
@@ -70,7 +70,7 @@ public class ArrayDeque<T> {
     }
 
     public T removeFirst() {
-        if(isEmpty()) {
+        if (isEmpty()) {
             return null;
         }
         size--;
@@ -83,7 +83,7 @@ public class ArrayDeque<T> {
     }
 
     public T removeLast() {
-        if(isEmpty()) {
+        if (isEmpty()) {
             return null;
         }
         size--;
@@ -108,7 +108,7 @@ public class ArrayDeque<T> {
             return null;
         }
         int begin = moveRight(head);
-        for(int i = 0; i < index; i++) {
+        for (int i = 0; i < index; i++) {
             begin = moveRight(head);
         }
         return items[begin];
