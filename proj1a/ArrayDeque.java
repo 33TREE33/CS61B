@@ -31,6 +31,14 @@ public class ArrayDeque<T> {
         return index;
     }
 
+    private boolean isFull() {
+        return size == items.length;
+    }
+
+    private boolean isShrink() {
+        return items.length > initialLength
+                && size <= items.length / scale;
+    }
     private void resize(int newLength) {
         int index = head;
         int begin = newLength / 2 - size / 2;
@@ -54,19 +62,19 @@ public class ArrayDeque<T> {
     }
 
     public void addFirst(T item) {
-        size++;
-        if (size > items.length) {
+        if (this.isFull()) {
             this.resize(items.length * 2);
         }
+        size++;
         items[head] = item;
         head = moveLeft(head);
     }
 
     public void addLast(T item) {
-        size++;
-        if (size > items.length) {
+        if (this.isFull()) {
             this.resize(items.length * 2);
         }
+        size++;
         items[tail] = item;
         tail = moveRight(tail);
     }
@@ -75,11 +83,10 @@ public class ArrayDeque<T> {
         if (isEmpty()) {
             return null;
         }
-        size--;
-        if (items.length > initialLength
-                && size <= items.length / scale) {
+        if (isShrink()) {
             this.resize(items.length / 2);
         }
+        size--;
         head = moveRight(head);
         return items[head];
     }
@@ -88,11 +95,10 @@ public class ArrayDeque<T> {
         if (isEmpty()) {
             return null;
         }
-        size--;
-        if (items.length > initialLength
-                && size <= items.length / scale) {
+        if (isShrink()) {
             this.resize(items.length / 2);
         }
+        size--;
         tail = moveLeft(tail);
         return items[tail];
     }
@@ -111,8 +117,9 @@ public class ArrayDeque<T> {
         }
         int begin = moveRight(head);
         for (int i = 0; i < index; i++) {
-            begin = moveRight(head);
+            begin = moveRight(begin);
         }
         return items[begin];
     }
+
 }

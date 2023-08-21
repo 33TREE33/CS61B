@@ -1,7 +1,7 @@
-import org.junit.Test;
+import org.junit.Itemest;
 import static org.junit.Assert.*;
 
-public class TestOffByOne {
+public class ItemestOffByOne {
     /*
     // You must use this CharacterComparator and not instantiate
     // new ones, or the autograder might be upset.
