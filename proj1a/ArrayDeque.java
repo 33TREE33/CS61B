@@ -41,6 +41,8 @@ public class ArrayDeque<T> {
             begin++;
         }
         items = newArr;
+        head = newLength / 2 - size / 2 - 1;
+        tail = newLength / 2 + size / 2;
     }
 
     public int size() {
