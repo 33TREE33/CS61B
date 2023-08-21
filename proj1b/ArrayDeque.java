@@ -31,7 +31,9 @@ public class ArrayDeque<Item> implements Deque<Item> {
 
     private void resize(int capacity) {
         Item[] a = (Item[]) new Object[capacity];
-        for (int i = items.length / 2 - size / 2, j = head; i < items.length / 2 + size / 2 - 1; i++) {
+        for (int i = items.length / 2 - size / 2,
+             j = head; i < items.length / 2 + size / 2 - 1;
+             i++) {
             j = moveRight(j);
             a[i] = items[j];
         }
