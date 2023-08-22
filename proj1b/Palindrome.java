@@ -26,7 +26,13 @@ public class Palindrome {
         }
         Deque<Character> charDeque = wordToDeque(word);
         for (int i = 0; i < charDeque.size() / 2; i++) {
-            if (!cc.equalChars(charDeque.removeFirst(), charDeque.removeLast())) {
+            char front = charDeque.removeFirst();
+            char behind = charDeque.removeLast();
+            if (front < 'A' || front > 'z'
+                || behind < 'A' || behind > 'z') {
+                return false;
+            }
+            if (!cc.equalChars(front, behind)) {
                 return false;
             }
         }
