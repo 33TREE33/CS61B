@@ -1,8 +1,12 @@
 public class OffByOne implements CharacterComparator {
-    public boolean equalChars(char x, char y) {
-        if (x < 'a' || x > 'z' || y < 'a' || y > 'z') {
-            return false;
+
+    private char toLowerCase(char ch) {
+        if (ch > 'A' && ch < 'Z') {
+            return (char) (ch + 'a' - 'A');
         }
+        return ch;
+    }
+    public boolean equalChars(char x, char y) {
         return Math.abs(x - y) == 1;
     }
 }
