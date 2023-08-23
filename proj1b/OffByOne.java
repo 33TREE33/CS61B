@@ -1,7 +1,7 @@
 public class OffByOne implements CharacterComparator {
 
     private static char toLowerCase(char ch) {
-        if (ch > 'A' && ch < 'Z') {
+        if (ch >= 'A' && ch <= 'Z') {
             return (char) (ch + 'a' - 'A');
         }
         return ch;
