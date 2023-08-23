@@ -1,21 +1,24 @@
 public class ArrayDeque<T> {
     private T[] items;
-    private int size;
     private int head;
     private int tail;
-    private final int initialLength = 8;
+    private int size;
+    //at least use 25% of the array
     private final int scale = 4;
+    //initial length should be set to 8
+    private final int initialLength = 8;
+
     public ArrayDeque() {
         items = (T[]) new Object[initialLength];
+        head = initialLength / 2 - 1;
+        tail = initialLength / 2;
         size = 0;
-        head = items.length / 2 - 1;
-        tail = items.length / 2;
     }
 
     private int moveRight(int index) {
         index++;
-        if (index >= items.length) {
-            return 0;
+        if (index == items.length) {
+            index = 0;
         }
         return index;
     }
@@ -23,91 +26,106 @@ public class ArrayDeque<T> {
     private int moveLeft(int index) {
         index--;
         if (index < 0) {
-            return items.length - 1;
+            index = items.length - 1;
         }
         return index;
     }
 
-    private void resize(int capacity) {
-        T[] a = (T[]) new Object[capacity];
-        for (int i = capacity / scale, j = head; i < capacity / scale + size; i++) {
-            a[i] = items[j];
-            j = moveRight(j);
-        }
-        head = capacity / scale - 1;
-        tail = capacity / scale + size;
-        items = a;
+    private boolean isFull() {
+        return size == items.length;
     }
 
-    public void addFirst(T item) {
-        size++;
-        if (size > items.length) {
-            this.resize(items.length * 2);
+    private boolean isShrink() {
+        return items.length > initialLength
+                && size <= items.length / scale;
+    }
+    private void resize(int newLength) {
+        int index = head;
+        int begin = newLength / 2 - size / 2;
+        T[] newArr = (T[]) new Object[newLength];
+        for (int i = 0; i < size; i++) {
+            index = moveRight(index);
+            newArr[begin] = items[index];
+            begin++;
         }
-        items[head] = item;
-        head = moveLeft(head);
+        items = newArr;
+        head = newLength / 2 - size / 2 - 1;
+        tail = newLength / 2 + size / 2;
     }
 
-    public void addLast(T item) {
-        size++;
-        if (size > items.length) {
-            this.resize(items.length * 2);
-        }
-        items[tail] = item;
-        tail = moveRight(tail);
+    public int size() {
+        return size;
     }
 
     public boolean isEmpty() {
         return size == 0;
     }
 
-    public int size() {
-        return size;
-    }
-    public void printDeque() {
-        for (int i = 0, j = head; i < size; i++) {
-            System.out.print(items[head]);
-            j = moveRight(j);
+    public void addFirst(T item) {
+        if (this.isFull()) {
+            this.resize(items.length * 2);
         }
+        size++;
+        items[head] = item;
+        head = moveLeft(head);
     }
+
+    public void addLast(T item) {
+        if (this.isFull()) {
+            this.resize(items.length * 2);
+        }
+        size++;
+        items[tail] = item;
+        tail = moveRight(tail);
+    }
+
     public T removeFirst() {
-        if (size == 0) {
+        if (isEmpty()) {
             return null;
         }
-        size--;
-        if (items.length > initialLength
-                && size > items.length / 2
-                && size < items.length / scale) {
+        if (isShrink()) {
             this.resize(items.length / 2);
         }
+        size--;
         head = moveRight(head);
-        T res = items[head];
-        return res;
+        return items[head];
     }
 
     public T removeLast() {
-        if (size == 0) {
+        if (isEmpty()) {
             return null;
         }
-        size--;
-        if (items.length > initialLength
-                && size > items.length / 2
-                && size < items.length / scale) {
+        if (isShrink()) {
             this.resize(items.length / 2);
         }
+        size--;
         tail = moveLeft(tail);
-        T res = items[tail];
-        return res;
+        return items[tail];
+    }
+
+    public void printDeque() {
+        int index = head;
+        for (int i = 0; i < size; i++) {
+            index = moveRight(index);
+            System.out.print(items[index]);
+        }
     }
 
     public T get(int index) {
         if (isEmpty() || index < 0 || index > size - 1) {
             return null;
         }
+<<<<<<< HEAD
         int i = head + 1;
         for ( ; i < head + index + 1; i++) {
             i = moveRight(i);
+=======
+        int begin = moveRight(head);
+        for (int i = 0; i < index; i++) {
+            begin = moveRight(begin);
+>>>>>>> b302adb9b9e1b8080812358d4d6ad0b9e292d872
         }
-        return items[i];
+        return items[begin];
     }
+
 }
